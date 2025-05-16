@@ -5,25 +5,28 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Web;
 
-class Program
+namespace MiddleWareCORSANtiforgerytokensHybrid
 {
-    static void Main(string[] args)
+    class Program
     {
-        // Start OWIN host (for CORS & Anti-Forgery)
-        string baseAddress = "http://localhost:9000/";
-        using (WebApp.Start<Startup>(url: baseAddress))
+        static void Main(string[] args)
         {
-            Console.WriteLine("OWIN host running...");
+            // Start OWIN host (for CORS & Anti-Forgery)
+            string baseAddress = "http://localhost:9000/";
+            using (WebApp.Start<Startup>(url: baseAddress))
+            {
+                Console.WriteLine("OWIN host running...");
 
-            // Start WCF service
-            var wcfServiceHost = new WebServiceHost(typeof(WcfService), new Uri(baseAddress + "api"));
-            wcfServiceHost.Open();
+                // Start WCF service
+                var wcfServiceHost = new WebServiceHost(typeof(WcfService), new Uri(baseAddress + "api"));
+                wcfServiceHost.Open();
 
-            Console.WriteLine("WCF service running...");
-            Console.WriteLine("Press Enter to exit.");
-            Console.ReadLine();
+                Console.WriteLine("WCF service running...");
+                Console.WriteLine("Press Enter to exit.");
+                Console.ReadLine();
 
-            wcfServiceHost.Close();
+                wcfServiceHost.Close();
+            }
         }
     }
 }
